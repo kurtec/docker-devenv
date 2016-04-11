@@ -1,22 +1,16 @@
 application:
-    build: code
+    image: debian:jessie
     volumes:
-        - ./symfony:/var/www/symfony
-        - ./logs/symfony:/var/www/symfony/app/logs
+        - $DOCKER4DEV_APPS_PATH:/var/www
+#        - var/logs/symfony:/var/www/symfony/app/logs
     tty: true
 db:
     image: mysql
-    ports:
-        - 3306:3306
-    environment:
-        MYSQL_ROOT_PASSWORD: root
-        MYSQL_DATABASE: symfony
-        MYSQL_USER: root
-        MYSQL_PASSWORD: root
+    volumes:
+        - ./var/logs/:/var/log/mysql
+        - ./var/data/mysql:/var/lib/mysql
 php:
     build: php-fpm
-    expose:
-        - 9000:9000
     volumes_from:
         - application
     links:
@@ -25,12 +19,13 @@ nginx:
     build: nginx
     ports:
         - 80:80
+        - 443:443
     links:
         - php
     volumes_from:
         - application
     volumes:
-        - ./logs/nginx/:/var/log/nginx
+        - ./var/logs/nginx/:/var/log/nginx
 elk:
     image: willdurand/elk
     ports:

@@ -1,16 +1,14 @@
-FROM debian:jessie
+FROM php:5.4-fpm
 
-MAINTAINER Vincent Composieux <vincent.composieux@gmail.com>
+MAINTAINER kurtec photodisorder@gmail.com
 
-RUN apt-get update && apt-get install -y php5-common php5-cli php5-fpm php5-mcrypt php5-mysql php5-apcu php5-gd php5-imagick php5-curl php5-intl
+WORKDIR /var/www
 
-ADD symfony.ini /etc/php5/fpm/conf.d/
-ADD symfony.ini /etc/php5/cli/conf.d/
+#update sorces lists and install tools
+RUN apt-get update && apt-get install -y git zlib1g-dev
 
-ADD symfony.pool.conf /etc/php5/fpm/pool.d/
+# install php extensions
+RUN docker-php-ext-install pdo_mysql zip
 
-RUN usermod -u 1000 www-data
-
-CMD ["php5-fpm", "-F"]
-
-EXPOSE 9000
+# install "composer"
+RUN php -r "readfile('https://getcomposer.org/installer');" > composer-setup.php && php -r "if (hash('SHA384', file_get_contents('composer-setup.php')) === '7228c001f88bee97506740ef0888240bd8a760b046ee16db8f4095c0d8d525f2367663f22a46b48d072c816e7fe19959') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" && php composer-setup.php && php -r "unlink('composer-setup.php');" && mv composer.phar /usr/local/bin/composer
