@@ -1,3 +1,4 @@
 /logs
 /www/*
 /var/*
+/nginx/conf/sites-enabled/*
