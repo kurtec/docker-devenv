@@ -6,6 +6,8 @@ application:
     tty: true
 db:
     image: mysql
+    environment:
+        - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
     volumes:
         - ./var/logs/:/var/log/mysql
         - ./var/data/mysql:/var/lib/mysql
