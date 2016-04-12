@@ -39,3 +39,8 @@ elk:
         - application
         - php
         - nginx
+blackfire:
+    image: blackfire/blackfire
+    environment:
+        - BLACKFIRE_CLIENT_ID=$BLACKFIRE_CLIENT_ID
+        - BLACKFIRE_CLIENT_TOKEN=$BLACKFIRE_CLIENT_TOKEN

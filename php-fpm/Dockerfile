@@ -1,4 +1,4 @@
-FROM php:5.4-fpm
+FROM php:7-fpm
 
 MAINTAINER kurtec photodisorder@gmail.com
 
