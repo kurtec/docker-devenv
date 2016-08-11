@@ -28,19 +28,19 @@ nginx:
         - application
     volumes:
         - ./var/logs/nginx/:/var/log/nginx
-elk:
-    image: willdurand/elk
-    ports:
-        - 81:80
-    volumes:
-        - ./elk/logstash:/etc/logstash
-        - ./elk/logstash/patterns:/opt/logstash/patterns
-    volumes_from:
-        - application
-        - php
-        - nginx
-blackfire:
-    image: blackfire/blackfire
-    environment:
-        - BLACKFIRE_CLIENT_ID=$BLACKFIRE_CLIENT_ID
-        - BLACKFIRE_CLIENT_TOKEN=$BLACKFIRE_CLIENT_TOKEN
+#elk:
+#    image: willdurand/elk
+#    ports:
+#        - 81:80
+#    volumes:
+#        - ./elk/logstash:/etc/logstash
+#        - ./elk/logstash/patterns:/opt/logstash/patterns
+#    volumes_from:
+#        - application
+#        - php
+#        - nginx
+#blackfire:
+#    image: blackfire/blackfire
+#    environment:
+#        - BLACKFIRE_CLIENT_ID=$BLACKFIRE_CLIENT_ID
+#        - BLACKFIRE_CLIENT_TOKEN=$BLACKFIRE_CLIENT_TOKEN
