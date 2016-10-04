@@ -1,0 +1,46 @@
+application:
+    image: debian:jessie
+    volumes:
+        - $DOCKER4DEV_APPS_PATH:/var/www
+#        - var/logs/symfony:/var/www/symfony/app/logs
+    tty: true
+db:
+    image: mysql
+    environment:
+        - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
+    volumes:
+        - ./var/logs/:/var/log/mysql
+        - ./var/data/mysql:/var/lib/mysql
+php:
+    build: php-fpm
+    volumes_from:
+        - application
+    links:
+        - db
+nginx:
+    build: nginx
+    ports:
+        - 80:80
+        - 443:443
+    links:
+        - php
+    volumes_from:
+        - application
+    volumes:
+        - ./var/logs/nginx/:/var/log/nginx
+#elk:
+#    image: willdurand/elk
+#    ports:
+#        - 81:80
+#    volumes:
+#        - ./elk/logstash:/etc/logstash
+#        - ./elk/logstash/patterns:/opt/logstash/patterns
+#    volumes_from:
+#        - application
+#        - php
+#        - nginx
+#blackfire:
+#    image: blackfire/blackfire
+#    environment:
+#        - BLACKFIRE_CLIENT_ID=$BLACKFIRE_CLIENT_ID
+#        - BLACKFIRE_CLIENT_TOKEN=$BLACKFIRE_CLIENT_TOKEN

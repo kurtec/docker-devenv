@@ -1,0 +1,19 @@
+#!/bin/zsh
+
+typeset -A containers
+
+containers=( "php" "docker4dev_php_1" "nginx" "docker4dev_nginx_1"  )
+
+if [ -z  "$1"  ]; then
+	echo "[ERROR] : container alias must be provided"
+	exit 1
+fi
+
+if [ -z "$containers[$1]" ]; then
+	echo "[ERROR] : container alias \"$1\" doesn't exist"
+	exit 1
+fi
+
+echo "[NOTICE] Attaching to "$containers[$1]" ..."
+
+docker exec -it $containers[$1] bash
