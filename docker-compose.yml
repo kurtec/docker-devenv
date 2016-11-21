@@ -1,22 +1,82 @@
 application:
     image: debian:jessie
     volumes:
-        - $DOCKER4DEV_APPS_PATH:/var/www
+         - /home/qmdev/Public/data_collect/feeder:/var/feeder
+         - /home/qmdev/Public/data_collect/dispatch:/var/dispatch
+         - /home/qmdev/Public/data_collect/maxmind:/var/maxmind 
+#        - /home/qmdev/Public/app2_abt_dev:/var/www_dev
+#        - /home/qmdev/Public/dcinfos:/var/www_dcinfos
+#        - /home/qmdev/Public/rediswarmup:/var/www_rediswarmup
 #        - var/logs/symfony:/var/www/symfony/app/logs
     tty: true
-db:
-    image: mysql
+db_1:
+    image: "mysql:5.6"
     environment:
-        - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
+        - MYSQL_ROOT_PASSWORD=toor
     volumes:
         - ./var/logs/:/var/log/mysql
-        - ./var/data/mysql:/var/lib/mysql
+        - ./var/data/mysql_db_1:/var/lib/mysql
+    ports:
+        - 33061:3306
+db_2:
+    image: "mysql:5.6"
+    environment:
+        - MYSQL_ROOT_PASSWORD=toor
+    volumes:
+        - ./var/logs/:/var/log/mysql
+        - ./var/data/mysql_db_2:/var/lib/mysql
+    ports:
+        - 33062:3306
+db_3:
+    image: "mysql:5.6"
+    environment:
+        - MYSQL_ROOT_PASSWORD=toor
+    volumes:
+        - ./var/logs/:/var/log/mysql
+        - ./var/data/mysql_db_3:/var/lib/mysql
+    ports:
+        - 33063:3306
+db_4:
+    image: "mysql:5.6"
+    environment:
+        - MYSQL_ROOT_PASSWORD=toor
+    volumes:
+        - ./var/logs/:/var/log/mysql
+        - ./var/data/mysql_db_4:/var/lib/mysql
+    ports:
+        - 33064:3306
+db_5:
+    image: "mysql:5.6"
+    environment:
+        - MYSQL_ROOT_PASSWORD=toor
+    volumes:
+        - ./var/logs/:/var/log/mysql
+        - ./var/data/mysql_db_5:/var/lib/mysql
+    ports:
+        - 33065:3306
 php:
     build: php-fpm
     volumes_from:
         - application
+    volumes:
+        - ./var/logs/php-fpm/:/var/log/
+        - /home/qmdev/.ssh/:/root/.ssh/
     links:
-        - db
+        - memcached
+        - redis
+        - db_1
+        - db_2
+        - db_3
+        - db_4
+        - db_5
+    ports:
+        - 9000 
+#phpmyadmin:
+#    image: "phpmyadmin/phpmyadmin"
+#    links:
+#        - db
+#    ports:
+#        - 8080:80
 nginx:
     build: nginx
     ports:
@@ -28,6 +88,19 @@ nginx:
         - application
     volumes:
         - ./var/logs/nginx/:/var/log/nginx
+redis:
+  build: redis
+  ports:
+    - "6379:6379"
+  volumes:
+    - ./var/data/redis:/data
+memcached:
+  image: memcached
+  ports:
+    - "11211:11211"
+#mdb:
+#  image: mongo
+#  command: -smallfiles -nojournal
 #elk:
 #    image: willdurand/elk
 #    ports:

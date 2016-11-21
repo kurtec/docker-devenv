@@ -1,0 +1,6 @@
+==============================================
+ Datacollect dev container
+==============================================
+ use [1;31m/usr/local/bin/geoipupdate[0m to update maxmind db
+ use [1;31m/var/dispatch/bin/console worker:run -v[0m to run worker
+ use [1;31m/var/dispatch/bin/phpunit --coverage-html report[0m to run tests

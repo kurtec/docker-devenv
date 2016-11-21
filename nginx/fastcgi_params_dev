@@ -22,10 +22,10 @@ fastcgi_param  SERVER_NAME        $server_name;
 # PHP only, required if PHP was built with --enable-force-cgi-redirect
 fastcgi_param  REDIRECT_STATUS    200;
 
-fastcgi_param   SYMFONY__DATABASE__HOST     db;
-fastcgi_param   SYMFONY__DATABASE__NAME     jq;
-fastcgi_param   SYMFONY__DATABASE__USER     root;
-fastcgi_param   SYMFONY__DATABASE__PASSWORD toor;
+fastcgi_param   SYMFONY__DATABASE__HOST     devdb.crtn4f8pfmtv.eu-west-1.rds.amazonaws.com;
+fastcgi_param   SYMFONY__DATABASE__NAME     jquery2;
+fastcgi_param   SYMFONY__DATABASE__USER     admin;
+fastcgi_param   SYMFONY__DATABASE__PASSWORD matrixwillrock;
 
 fastcgi_param   SYMFONY__DATABASE__DMP__HOST     dmp.crtn4f8pfmtv.eu-west-1.rds.amazonaws.com;
 fastcgi_param   SYMFONY__DATABASE__DMP__NAME     dmp;
@@ -36,4 +36,3 @@ fastcgi_param   SYMFONY__DATABASE__MOBILE__HOST      abmobile-dev.crtn4f8pfmtv.e
 fastcgi_param   SYMFONY__DATABASE__MOBILE__NAME      ABTastyMobile;
 fastcgi_param   SYMFONY__DATABASE__MOBILE__USER      dbadmin;
 fastcgi_param   SYMFONY__DATABASE__MOBILE__PASSWORD  h9crNwCtZTnJWjjp;
-fastcgi_param   SYMFONY__REDIS_HOST  redis;
